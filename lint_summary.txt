@@ -1,0 +1,286 @@
+﻿File: C:\Users\Witt\Desktop\codespace\Blogging system by claude in antigravity\nexusforge\analyze_lint.js
+  2:12 [Error] A `require()` style import is forbidden. (@typescript-eslint/no-require-imports)
+File: C:\Users\Witt\Desktop\codespace\Blogging system by claude in antigravity\nexusforge\analyze_lint_stdin.js
+  2:7 [Warning] 'fs' is assigned a value but never used. (@typescript-eslint/no-unused-vars)
+  2:12 [Error] A `require()` style import is forbidden. (@typescript-eslint/no-require-imports)
+File: C:\Users\Witt\Desktop\codespace\Blogging system by claude in antigravity\nexusforge\src\app\blog\[slug]\page.tsx
+  15:10 [Warning] 'blogPosts' is defined but never used. (@typescript-eslint/no-unused-vars)
+  49:9 [Error] Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+C:\Users\Witt\Desktop\codespace\Blogging system by claude in antigravity\nexusforge\src\app\blog\[slug]\page.tsx:49:9
+  47 |         }
+  48 |
+> 49 |         setToc(items);
+     |         ^^^^^^ Avoid calling setState() directly within an effect
+  50 |     }, [post?.content]);
+  51 |
+  52 |     // Track active section on scroll (react-hooks/set-state-in-effect)
+  78:40 [Error] `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`. (react/no-unescaped-entities)
+  ... and 1 more
+File: C:\Users\Witt\Desktop\codespace\Blogging system by claude in antigravity\nexusforge\src\app\codelab\page.tsx
+  20:11 [Warning] 'featuredRepos' is assigned a value but never used. (@typescript-eslint/no-unused-vars)
+File: C:\Users\Witt\Desktop\codespace\Blogging system by claude in antigravity\nexusforge\src\app\contact\page.tsx
+  40:12 [Warning] 'showChat' is assigned a value but never used. (@typescript-eslint/no-unused-vars)
+  40:22 [Warning] 'setShowChat' is assigned a value but never used. (@typescript-eslint/no-unused-vars)
+  41:12 [Warning] 'audioEnabled' is assigned a value but never used. (@typescript-eslint/no-unused-vars)
+  ... and 1 more
+File: C:\Users\Witt\Desktop\codespace\Blogging system by claude in antigravity\nexusforge\src\app\page.tsx
+  18:19 [Warning] 't' is assigned a value but never used. (@typescript-eslint/no-unused-vars)
+File: C:\Users\Witt\Desktop\codespace\Blogging system by claude in antigravity\nexusforge\src\app\portfolio\[id]\page.tsx
+  30:40 [Error] `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`. (react/no-unescaped-entities)
+  30:61 [Error] `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`. (react/no-unescaped-entities)
+  341:32 [Error] `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`. (react/no-unescaped-entities)
+File: C:\Users\Witt\Desktop\codespace\Blogging system by claude in antigravity\nexusforge\src\components\engine\CanvasFallback.tsx
+  50:8 [Warning] React Hook useCallback has a missing dependency: 'colors'. Either include it or remove the dependency array. (react-hooks/exhaustive-deps)
+File: C:\Users\Witt\Desktop\codespace\Blogging system by claude in antigravity\nexusforge\src\components\engine\ParticleUniverse.tsx
+  36:22 [Error] Error: Cannot call impure function during render
+
+`Math.random` is an impure function. Calling an impure function can produce unstable results that update unpredictably when the component happens to re-render. (https://react.dev/reference/rules/components-and-hooks-must-be-pure#components-and-hooks-must-be-idempotent).
+
+C:\Users\Witt\Desktop\codespace\Blogging system by claude in antigravity\nexusforge\src\components\engine\ParticleUniverse.tsx:36:22
+  34 |       const i3 = i * 3;
+  35 |       // Spread particles in a sphere
+> 36 |       const radius = Math.random() * 15 + 5;
+     |                      ^^^^^^^^^^^^^ Cannot call impure function
+  37 |       const theta = Math.random() * Math.PI * 2;
+  38 |       const phi = Math.acos((Math.random() * 2) - 1);
+  39 |        (react-hooks/purity)
+  37:21 [Error] Error: Cannot call impure function during render
+
+`Math.random` is an impure function. Calling an impure function can produce unstable results that update unpredictably when the component happens to re-render. (https://react.dev/reference/rules/components-and-hooks-must-be-pure#components-and-hooks-must-be-idempotent).
+
+C:\Users\Witt\Desktop\codespace\Blogging system by claude in antigravity\nexusforge\src\components\engine\ParticleUniverse.tsx:37:21
+  35 |       // Spread particles in a sphere
+  36 |       const radius = Math.random() * 15 + 5;
+> 37 |       const theta = Math.random() * Math.PI * 2;
+     |                     ^^^^^^^^^^^^^ Cannot call impure function
+  38 |       const phi = Math.acos((Math.random() * 2) - 1);
+  39 |       
+  40 |       pos[i3] = radius * Math.sin(phi) * Math.cos(theta); (react-hooks/purity)
+  38:30 [Error] Error: Cannot call impure function during render
+
+`Math.random` is an impure function. Calling an impure function can produce unstable results that update unpredictably when the component happens to re-render. (https://react.dev/reference/rules/components-and-hooks-must-be-pure#components-and-hooks-must-be-idempotent).
+
+C:\Users\Witt\Desktop\codespace\Blogging system by claude in antigravity\nexusforge\src\components\engine\ParticleUniverse.tsx:38:30
+  36 |       const radius = Math.random() * 15 + 5;
+  37 |       const theta = Math.random() * Math.PI * 2;
+> 38 |       const phi = Math.acos((Math.random() * 2) - 1);
+     |                              ^^^^^^^^^^^^^ Cannot call impure function
+  39 |       
+  40 |       pos[i3] = radius * Math.sin(phi) * Math.cos(theta);
+  41 |       pos[i3 + 1] = radius * Math.sin(phi) * Math.sin(theta); (react-hooks/purity)
+  ... and 6 more
+File: C:\Users\Witt\Desktop\codespace\Blogging system by claude in antigravity\nexusforge\src\components\layout\Navigation.tsx
+  9:28 [Warning] 'Mic' is defined but never used. (@typescript-eslint/no-unused-vars)
+  45:9 [Error] Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+C:\Users\Witt\Desktop\codespace\Blogging system by claude in antigravity\nexusforge\src\components\layout\Navigation.tsx:45:9
+  43 |     // Close mobile menu on route change
+  44 |     useEffect(() => {
+> 45 |         setIsOpen(false);
+     |         ^^^^^^^^^ Avoid calling setState() directly within an effect
+  46 |     }, [pathname]);
+  47 |
+  48 |     return ( (react-hooks/set-state-in-effect)
+File: C:\Users\Witt\Desktop\codespace\Blogging system by claude in antigravity\nexusforge\src\components\providers\AudioProvider.tsx
+  5:60 [Warning] 'Mic' is defined but never used. (@typescript-eslint/no-unused-vars)
+  58:11 [Warning] 'bgMusicRef' is assigned a value but never used. (@typescript-eslint/no-unused-vars)
+  61:9 [Error] Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+C:\Users\Witt\Desktop\codespace\Blogging system by claude in antigravity\nexusforge\src\components\providers\AudioProvider.tsx:61:9
+  59 |
+  60 |     useEffect(() => {
+> 61 |         setMounted(true);
+     |         ^^^^^^^^^^ Avoid calling setState() directly within an effect
+  62 |
+  63 |         // Initialize Web Audio API
+  64 |         if (typeof window !== 'undefined') { (react-hooks/set-state-in-effect)
+  ... and 3 more
+File: C:\Users\Witt\Desktop\codespace\Blogging system by claude in antigravity\nexusforge\src\components\providers\BehaviorProvider.tsx
+  61:41 [Error] Error: Cannot call impure function during render
+
+`Date.now` is an impure function. Calling an impure function can produce unstable results that update unpredictably when the component happens to re-render. (https://react.dev/reference/rules/components-and-hooks-must-be-pure#components-and-hooks-must-be-idempotent).
+
+C:\Users\Witt\Desktop\codespace\Blogging system by claude in antigravity\nexusforge\src\components\providers\BehaviorProvider.tsx:61:41
+  59 |     const [behavior, setBehavior] = useState<UserBehavior>(defaultBehavior);
+  60 |     const [mounted, setMounted] = useState(false);
+> 61 |     const [sessionStartTime] = useState(Date.now());
+     |                                         ^^^^^^^^^^ Cannot call impure function
+  62 |
+  63 |     // Load behavior from localStorage
+  64 |     useEffect(() => { (react-hooks/purity)
+  93:35 [Error] Error: Cannot access variable before it is declared
+
+`calculateInteractionLevel` is accessed before it is declared, which prevents the earlier access from updating when this value changes over time.
+
+C:\Users\Witt\Desktop\codespace\Blogging system by claude in antigravity\nexusforge\src\components\providers\BehaviorProvider.tsx:93:35
+  91 |                 totalTimeSpent: behavior.totalTimeSpent + timeSpent,
+  92 |                 lastVisit: Date.now(),
+> 93 |                 interactionLevel: calculateInteractionLevel(behavior),
+     |                                   ^^^^^^^^^^^^^^^^^^^^^^^^^ `calculateInteractionLevel` accessed before it is declared
+  94 |             };
+  95 |             localStorage.setItem(STORAGE_KEY, JSON.stringify(updatedBehavior));
+  96 |         }, 30000); // Save every 30 seconds
+
+C:\Users\Witt\Desktop\codespace\Blogging system by claude in antigravity\nexusforge\src\components\providers\BehaviorProvider.tsx:145:5
+  143 |
+  144 |     // Calculate interaction level
+> 145 |     const calculateInteractionLevel = (b: UserBehavior): 'low' | 'medium' | 'high' => {
+      |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 146 |         const score =
+      | ^^^^^^^^^^^^^^^^^^^^^
+> 147 |             (b.visitCount * 10) +
+      ???
+      | ^^^^^^^^^^^^^^^^^^^^^
+> 154 |         return 'low';
+      | ^^^^^^^^^^^^^^^^^^^^^
+> 155 |     };
+      | ^^^^^^^ `calculateInteractionLevel` is declared here
+  156 |
+  157 |     // Get personalized content based on behavior
+  158 |     const getPersonalizedContent = useCallback((): PersonalizedContent => { (react-hooks/immutability)
+  251:40 [Error] Error: Cannot call impure function during render
+
+`Date.now` is an impure function. Calling an impure function can produce unstable results that update unpredictably when the component happens to re-render. (https://react.dev/reference/rules/components-and-hooks-must-be-pure#components-and-hooks-must-be-idempotent).
+
+C:\Users\Witt\Desktop\codespace\Blogging system by claude in antigravity\nexusforge\src\components\providers\BehaviorProvider.tsx:251:40
+  249 |     if (!show) return null;
+  250 |
+> 251 |     const daysSinceVisit = Math.floor((Date.now() - behavior.lastVisit) / 86400000);
+      |                                        ^^^^^^^^^^ Cannot call impure function
+  252 |
+  253 |     return (
+  254 |         <div className="fixed top-20 left-1/2 -translate-x-1/2 z-50 px-6 py-3  (react-hooks/purity)
+  ... and 1 more
+File: C:\Users\Witt\Desktop\codespace\Blogging system by claude in antigravity\nexusforge\src\components\providers\I18nProvider.tsx
+  285:9 [Error] Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+C:\Users\Witt\Desktop\codespace\Blogging system by claude in antigravity\nexusforge\src\components\providers\I18nProvider.tsx:285:9
+  283 |     // Load locale from storage on mount
+  284 |     useEffect(() => {
+> 285 |         setMounted(true);
+      |         ^^^^^^^^^^ Avoid calling setState() directly within an effect
+  286 |         try {
+  287 |             const stored = localStorage.getItem(LOCALE_STORAGE_KEY) as Locale | null;
+  288 |             if (stored && (stored === 'en' || stored === 'zh')) { (react-hooks/set-state-in-effect)
+  297:18 [Warning] 'e' is defined but never used. (@typescript-eslint/no-unused-vars)
+  311:18 [Warning] 'e' is defined but never used. (@typescript-eslint/no-unused-vars)
+  ... and 1 more
+File: C:\Users\Witt\Desktop\codespace\Blogging system by claude in antigravity\nexusforge\src\components\providers\ThemeProvider.tsx
+  21:9 [Error] Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+C:\Users\Witt\Desktop\codespace\Blogging system by claude in antigravity\nexusforge\src\components\providers\ThemeProvider.tsx:21:9
+  19 |
+  20 |     useEffect(() => {
+> 21 |         setMounted(true);
+     |         ^^^^^^^^^^ Avoid calling setState() directly within an effect
+  22 |         // Check localStorage first
+  23 |         const savedTheme = localStorage.getItem('nexusforge-theme') as Theme | null;
+  24 |         if (savedTheme) { (react-hooks/set-state-in-effect)
+File: C:\Users\Witt\Desktop\codespace\Blogging system by claude in antigravity\nexusforge\src\components\pwa\PWAInstallPrompt.tsx
+  21:13 [Error] Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+C:\Users\Witt\Desktop\codespace\Blogging system by claude in antigravity\nexusforge\src\components\pwa\PWAInstallPrompt.tsx:21:13
+  19 |         // Check if already installed
+  20 |         if (window.matchMedia('(display-mode: standalone)').matches) {
+> 21 |             setIsInstalled(true);
+     |             ^^^^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  22 |             return;
+  23 |         }
+  24 | (react-hooks/set-state-in-effect)
+  75:13 [Error] Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+C:\Users\Witt\Desktop\codespace\Blogging system by claude in antigravity\nexusforge\src\components\pwa\PWAInstallPrompt.tsx:75:13
+  73 |     useEffect(() => {
+  74 |         if (sessionStorage.getItem('pwa-prompt-dismissed')) {
+> 75 |             setShowPrompt(false);
+     |             ^^^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  76 |         }
+  77 |     }, []);
+  78 | (react-hooks/set-state-in-effect)
+File: C:\Users\Witt\Desktop\codespace\Blogging system by claude in antigravity\nexusforge\src\components\ui\AudioController.tsx
+  47:8 [Warning] React Hook useEffect has a missing dependency: 'volume'. Either include it or remove the dependency array. (react-hooks/exhaustive-deps)
+  199:51 [Warning] 'src' is defined but never used. (@typescript-eslint/no-unused-vars)
+File: C:\Users\Witt\Desktop\codespace\Blogging system by claude in antigravity\nexusforge\src\components\ui\GestureControl.tsx
+  223:38 [Warning] 'enabled' is assigned a value but never used. (@typescript-eslint/no-unused-vars)
+File: C:\Users\Witt\Desktop\codespace\Blogging system by claude in antigravity\nexusforge\src\components\ui\GlitchText.tsx
+  33:13 [Error] Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+C:\Users\Witt\Desktop\codespace\Blogging system by claude in antigravity\nexusforge\src\components\ui\GlitchText.tsx:33:13
+  31 |     useEffect(() => {
+  32 |         if (!typewriter) {
+> 33 |             setDisplayText(text);
+     |             ^^^^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  34 |             return;
+  35 |         }
+  36 | (react-hooks/set-state-in-effect)
+File: C:\Users\Witt\Desktop\codespace\Blogging system by claude in antigravity\nexusforge\src\components\ui\InteractionController.tsx
+  6:76 [Warning] 'Volume2' is defined but never used. (@typescript-eslint/no-unused-vars)
+  46:35 [Error] Unexpected any. Specify a different type. (@typescript-eslint/no-explicit-any)
+  54:46 [Error] Unexpected any. Specify a different type. (@typescript-eslint/no-explicit-any)
+  ... and 8 more
+File: C:\Users\Witt\Desktop\codespace\Blogging system by claude in antigravity\nexusforge\src\components\ui\KeyboardShortcuts.tsx
+  43:11 [Warning] The 'allBindings' array makes the dependencies of useCallback Hook (at line 66) change on every render. To fix this, wrap the initialization of 'allBindings' in its own useMemo() Hook. (react-hooks/exhaustive-deps)
+File: C:\Users\Witt\Desktop\codespace\Blogging system by claude in antigravity\nexusforge\src\components\ui\MarkdownRenderer.tsx
+  3:17 [Warning] 'useEffect' is defined but never used. (@typescript-eslint/no-unused-vars)
+  3:28 [Warning] 'useRef' is defined but never used. (@typescript-eslint/no-unused-vars)
+  8:10 [Warning] 'motion' is defined but never used. (@typescript-eslint/no-unused-vars)
+  ... and 1 more
+File: C:\Users\Witt\Desktop\codespace\Blogging system by claude in antigravity\nexusforge\src\components\ui\VoiceCommand.tsx
+  5:23 [Warning] 'Volume2' is defined but never used. (@typescript-eslint/no-unused-vars)
+  5:32 [Warning] 'VolumeX' is defined but never used. (@typescript-eslint/no-unused-vars)
+  39:35 [Error] Unexpected any. Specify a different type. (@typescript-eslint/no-explicit-any)
+  ... and 11 more
+File: C:\Users\Witt\Desktop\codespace\Blogging system by claude in antigravity\nexusforge\src\data\blogContent.ts
+  306:27 [Error] A `require()` style import is forbidden. (@typescript-eslint/no-require-imports)
+  319:27 [Error] A `require()` style import is forbidden. (@typescript-eslint/no-require-imports)
+File: C:\Users\Witt\Desktop\codespace\Blogging system by claude in antigravity\nexusforge\src\lib\ai\gemini.ts
+  103:39 [Error] Unexpected any. Specify a different type. (@typescript-eslint/no-explicit-any)

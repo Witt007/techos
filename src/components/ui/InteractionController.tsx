@@ -12,6 +12,23 @@ interface InteractionControllerProps {
     enableGestures?: boolean;
 }
 
+interface SpeechRecognitionErrorEvent extends Event {
+    error: string;
+    message: string;
+}
+
+interface SpeechRecognition extends EventTarget {
+    continuous: boolean;
+    interimResults: boolean;
+    lang: string;
+    start: () => void;
+    stop: () => void;
+    abort: () => void;
+    onresult: (event: any) => void;
+    onerror: (event: SpeechRecognitionErrorEvent) => void;
+    onend: () => void;
+}
+
 // Voice command mappings
 const VOICE_COMMANDS: Record<string, string[]> = {
     'navigate_home': ['go home', 'home page', 'home', '回首页', '去首页', '首页'],
@@ -43,7 +60,7 @@ export default function InteractionController({
     const [transcript, setTranscript] = useState('');
     const [mounted, setMounted] = useState(false);
 
-    const recognitionRef = useRef<any>(null);
+    const recognitionRef = useRef<SpeechRecognition | null>(null);
 
     // Mouse gesture tracking
     const gestureStartRef = useRef<{ x: number; y: number; time: number } | null>(null);
@@ -51,14 +68,16 @@ export default function InteractionController({
     useEffect(() => {
         setMounted(true);
         // Check for speech recognition support
+        // Check for speech recognition support
         const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
         setVoiceSupported(!!SpeechRecognition);
 
         if (SpeechRecognition) {
-            recognitionRef.current = new SpeechRecognition();
-            recognitionRef.current.continuous = false;
-            recognitionRef.current.interimResults = true;
-            recognitionRef.current.lang = locale === 'zh' ? 'zh-CN' : 'en-US';
+            const recognition = new SpeechRecognition();
+            recognition.continuous = false;
+            recognition.interimResults = true;
+            recognition.lang = locale === 'zh' ? 'zh-CN' : 'en-US';
+            recognitionRef.current = recognition;
         }
     }, [locale]);
 
@@ -142,7 +161,7 @@ export default function InteractionController({
             }
         };
 
-        recognitionRef.current.onerror = (event: any) => {
+        recognitionRef.current.onerror = (event: SpeechRecognitionErrorEvent) => {
             console.error('Speech recognition error:', event.error);
             setIsVoiceActive(false);
             if (event.error === 'not-allowed') {
@@ -369,8 +388,8 @@ export default function InteractionController({
                                     <motion.button
                                         onClick={isVoiceActive ? stopVoiceRecognition : startVoiceRecognition}
                                         className={`px-4 py-2 rounded-full text-sm font-medium flex items-center gap-2 ${isVoiceActive
-                                                ? 'bg-[var(--neon-magenta)] text-white'
-                                                : 'bg-[var(--neon-cyan)] text-[var(--void-deepest)]'
+                                            ? 'bg-[var(--neon-magenta)] text-white'
+                                            : 'bg-[var(--neon-cyan)] text-[var(--void-deepest)]'
                                             }`}
                                         whileHover={{ scale: 1.05 }}
                                         whileTap={{ scale: 0.95 }}
@@ -399,8 +418,8 @@ export default function InteractionController({
                                     <button
                                         onClick={() => setIsGesturesEnabled(prev => !prev)}
                                         className={`px-3 py-1 rounded-full text-xs font-medium transition-all ${isGesturesEnabled
-                                                ? 'bg-[var(--neon-cyan)] text-[var(--void-deepest)]'
-                                                : 'bg-[var(--void-base)] text-[var(--text-muted)]'
+                                            ? 'bg-[var(--neon-cyan)] text-[var(--void-deepest)]'
+                                            : 'bg-[var(--void-base)] text-[var(--text-muted)]'
                                             }`}
                                     >
                                         {isGesturesEnabled

@@ -1,7 +1,7 @@
 // Gemini AI Service
 // Provides AI chat functionality with streaming support
 
-import { GoogleGenerativeAI, GenerativeModel, ChatSession } from '@google/generative-ai';
+import { GoogleGenerativeAI, GenerativeModel, ChatSession, Content } from '@google/generative-ai';
 
 // System prompt for the AI assistant
 const SYSTEM_PROMPT = `You are NexusForge AI, a friendly and knowledgeable assistant for Alex Chen's personal portfolio website. 
@@ -100,7 +100,7 @@ class GeminiService {
             }));
 
         this.chatSession = this.model.startChat({
-            history: geminiHistory as any,
+            history: geminiHistory as Content[],
             generationConfig: {
                 temperature: 0.7,
                 maxOutputTokens: 1024,

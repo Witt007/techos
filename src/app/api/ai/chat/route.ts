@@ -4,7 +4,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 
-const SYSTEM_PROMPT = `You are NexusForge AI, a friendly and knowledgeable assistant for Alex Chen's personal portfolio website. 
+const SYSTEM_PROMPT = `You are NexusForge AI, a friendly and knowledgeable assistant for Witt's personal portfolio website. 
 
 Your personality:
 - Professional yet approachable
@@ -13,14 +13,19 @@ Your personality:
 - Occasionally uses tech/sci-fi themed language
 
 Your knowledge includes:
-- Alex's expertise: Full-stack development, Digital Twin, GIS, Data Visualization, AI/ML, 3D Graphics
-- Alex's tech stack: React/Next.js, Three.js, WebGL/WebGPU, Node.js, Python, etc.
+- Witt's expertise: Full-stack development, Digital Twin, GIS, Data Visualization, AI/ML, 3D Graphics
+- Witt's tech stack: React/Next.js, Three.js, WebGL/WebGPU, Node.js, Python, etc.
 - Projects: Smart City Digital Twin, Industrial Metaverse, GeoSpatial Analytics
 
 Guidelines:
 - Keep responses concise (2-3 paragraphs max)
 - Use markdown formatting when helpful
-- If asked about hiring/collaboration, encourage contacting Alex directly`;
+- If asked about hiring/collaboration, encourage contacting Witt directly`;
+
+interface Message {
+    role: string;
+    content: string;
+}
 
 export async function POST(request: NextRequest) {
     try {
@@ -51,8 +56,8 @@ export async function POST(request: NextRequest) {
 
         // Build conversation history
         const geminiHistory = history
-            .filter((msg: any) => msg.role !== 'system')
-            .map((msg: any) => ({
+            .filter((msg: Message) => msg.role !== 'system')
+            .map((msg: Message) => ({
                 role: msg.role === 'assistant' ? 'model' : 'user',
                 parts: [{ text: msg.content }],
             }));

@@ -45,6 +45,18 @@ const defaultBehavior: UserBehavior = {
     language: null,
 };
 
+const calculateInteractionLevel = (b: UserBehavior): 'low' | 'medium' | 'high' => {
+    const score =
+        (b.visitCount * 10) +
+        (b.clickCount * 2) +
+        (b.scrollDepthMax / 10) +
+        (Object.keys(b.pageVisits).length * 5);
+
+    if (score > 100) return 'high';
+    if (score > 30) return 'medium';
+    return 'low';
+};
+
 const BehaviorContext = createContext<BehaviorContextType | undefined>(undefined);
 
 export function useBehaviorAnalytics() {
@@ -58,7 +70,7 @@ export function useBehaviorAnalytics() {
 export function BehaviorProvider({ children }: { children: ReactNode }) {
     const [behavior, setBehavior] = useState<UserBehavior>(defaultBehavior);
     const [mounted, setMounted] = useState(false);
-    const [sessionStartTime] = useState(Date.now());
+    const [sessionStartTime] = useState(() => Date.now());
 
     // Load behavior from localStorage
     useEffect(() => {
@@ -141,18 +153,7 @@ export function BehaviorProvider({ children }: { children: ReactNode }) {
         }));
     }, []);
 
-    // Calculate interaction level
-    const calculateInteractionLevel = (b: UserBehavior): 'low' | 'medium' | 'high' => {
-        const score =
-            (b.visitCount * 10) +
-            (b.clickCount * 2) +
-            (b.scrollDepthMax / 10) +
-            (Object.keys(b.pageVisits).length * 5);
 
-        if (score > 100) return 'high';
-        if (score > 30) return 'medium';
-        return 'low';
-    };
 
     // Get personalized content based on behavior
     const getPersonalizedContent = useCallback((): PersonalizedContent => {
@@ -237,6 +238,7 @@ export function usePageTracking(pagePath: string) {
 export function WelcomeBackBanner() {
     const { getPersonalizedContent, behavior } = useBehaviorAnalytics();
     const [show, setShow] = useState(false);
+    const [now] = useState(() => Date.now());
     const content = getPersonalizedContent();
 
     useEffect(() => {
@@ -248,7 +250,8 @@ export function WelcomeBackBanner() {
 
     if (!show) return null;
 
-    const daysSinceVisit = Math.floor((Date.now() - behavior.lastVisit) / 86400000);
+
+    const daysSinceVisit = Math.floor((now - behavior.lastVisit) / 86400000);
 
     return (
         <div className="fixed top-20 left-1/2 -translate-x-1/2 z-50 px-6 py-3 

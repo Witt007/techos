@@ -61,7 +61,7 @@ const CyberButton = forwardRef<HTMLButtonElement, CyberButtonProps>(
                             }}
                         >
                             {icon && iconPosition === 'left' && <span className="mr-2">{icon}</span>}
-                            {children}
+                            {children as React.ReactNode}
                             {icon && iconPosition === 'right' && <span className="ml-2">{icon}</span>}
                         </span>
                         <span
@@ -74,7 +74,7 @@ const CyberButton = forwardRef<HTMLButtonElement, CyberButtonProps>(
                             }}
                         >
                             {icon && iconPosition === 'left' && <span className="mr-2">{icon}</span>}
-                            {children}
+                            {children as React.ReactNode}
                             {icon && iconPosition === 'right' && <span className="ml-2">{icon}</span>}
                         </span>
                     </>
@@ -83,7 +83,7 @@ const CyberButton = forwardRef<HTMLButtonElement, CyberButtonProps>(
                 {/* Main content */}
                 <span className="relative z-10 flex items-center justify-center gap-2">
                     {icon && iconPosition === 'left' && icon}
-                    {children}
+                    {children as React.ReactNode}
                     {icon && iconPosition === 'right' && icon}
                 </span>
 

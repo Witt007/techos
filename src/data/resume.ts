@@ -25,7 +25,10 @@ export interface ResumeData {
         location: BilingualText;
         startDate: string;
         endDate: BilingualText;
-        highlights: BilingualText;
+        highlights: {
+            en: string[];
+            zh: string[];
+        };
     }[];
     education: {
         institution: BilingualText;
