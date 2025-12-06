@@ -128,7 +128,7 @@ const translations: Record<Locale, Translations> = {
                 send: 'Send Message',
             },
             ai: {
-                greeting: 'Hello! I\'m the NexusForge AI assistant. How can I help you today?',
+                greeting: 'Hello! I\'m the Techos AI assistant. How can I help you today?',
                 placeholder: 'Ask me anything...',
                 quickQuestions: 'Quick questions:',
             },

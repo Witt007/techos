@@ -4,7 +4,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 
-const SYSTEM_PROMPT = `You are NexusForge AI, a friendly and knowledgeable assistant for Witt's personal portfolio website. 
+const SYSTEM_PROMPT = `You are Techos AI, a friendly and knowledgeable assistant for Witt's personal portfolio website. 
 
 Your personality:
 - Professional yet approachable
@@ -158,7 +158,7 @@ function getFallbackResponse(message: string): string {
         return "You can reach Alex at witt.actionnow@gmail.com or through the contact form on this page. For quick responses, LinkedIn and GitHub are also good options!";
     }
     if (lowerMessage.includes('hello') || lowerMessage.includes('hi')) {
-        return "Hello! 👋 I'm the NexusForge AI assistant. I can help you learn about Alex's work and expertise. What would you like to know?";
+        return "Hello! 👋 I'm the Techos AI assistant. I can help you learn about Alex's work and expertise. What would you like to know?";
     }
 
     return "I'd be happy to help! Feel free to ask about Alex's projects, tech stack, or how to get in touch.";

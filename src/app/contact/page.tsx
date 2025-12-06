@@ -21,7 +21,7 @@ interface ChatMessage {
 const initialMessages: ChatMessage[] = [
     {
         role: 'assistant',
-        content: "Hello! I'm the NexusForge AI assistant. I can help you learn more about Witt's work, answer questions about his projects, or help you get in touch. How can I assist you today?",
+        content: "Hello! I'm the Techos AI assistant. I can help you learn more about Witt's work, answer questions about his projects, or help you get in touch. How can I assist you today?",
         timestamp: new Date(),
     },
 ];

@@ -33,12 +33,12 @@ export function useAudio() {
 
 // AI Avatar introduction text
 const introductions = {
-    en: `Welcome to NexusForge. I'm ${profile.name.en}, a Creative Engineer and Full-Stack Developer based in ${profile.contact.location.en}. 
+    en: `Welcome to Techos. I'm ${profile.name.en}, a Creative Engineer and Full-Stack Developer based in ${profile.contact.location.en}. 
     I specialize in Digital Twin technology, GIS visualization, and AI-powered applications. 
     My passion lies at the intersection of art and technology, where I craft immersive digital experiences.
     Feel free to explore my portfolio, check out my open-source projects, or get in touch if you'd like to collaborate.
     Thank you for visiting!`,
-    zh: `欢迎来到 NexusForge。我是${profile.name.zh}，一名来自${profile.contact.location.zh}的创意工程师和全栈开发者。
+    zh: `欢迎来到 Techos。我是${profile.name.zh}，一名来自${profile.contact.location.zh}的创意工程师和全栈开发者。
     我专注于数字孪生技术、GIS可视化和人工智能应用开发。
     我的热情在于艺术与科技的交汇点，在这里我创造沉浸式的数字体验。
     欢迎浏览我的作品集、查看我的开源项目，如果您想合作，请随时联系我。
