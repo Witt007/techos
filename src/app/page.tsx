@@ -388,7 +388,7 @@ export default function HomePage() {
         <div className="max-w-6xl mx-auto">
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-[var(--text-muted)]">
             <div>
-              © {new Date().getFullYear()} NexusForge. {locale === 'zh' ? '版权所有' : 'All rights reserved'}.
+              © {new Date().getFullYear()} Witt. {locale === 'zh' ? '版权所有' : 'All rights reserved'}.
             </div>
             <div className="flex items-center gap-6">
               <a

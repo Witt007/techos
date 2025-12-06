@@ -23,9 +23,9 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
         const savedTheme = localStorage.getItem('nexusforge-theme') as Theme | null;
         if (savedTheme) {
             setTheme(savedTheme);
-        } else if (window.matchMedia('(prefers-color-scheme: light)').matches) {
+        } /*else if (window.matchMedia('(prefers-color-scheme: light)').matches) {
             setTheme('light');
-        }
+        }*/
     }, []);
 
     useEffect(() => {

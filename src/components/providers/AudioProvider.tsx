@@ -202,7 +202,7 @@ export function AudioProvider({ children }: { children: ReactNode }) {
             const charIndex = event.charIndex;
             const approximateWordIndex = Math.floor(charIndex / 5);
             const snippet = words.slice(Math.max(0, approximateWordIndex - 2), approximateWordIndex + 8).join(' ');
-            setCurrentText(snippet);
+            setCurrentText(snippet || '...');
         };
 
         utterance.onend = () => {
@@ -428,8 +428,8 @@ export function AudioControlButton() {
             <motion.button
                 onClick={() => setShowMenu(prev => !prev)}
                 className={`p-2 rounded-lg transition-colors ${isEnabled
-                        ? 'text-[var(--neon-cyan)] bg-[var(--neon-cyan)]/10'
-                        : 'text-[var(--text-secondary)] hover:text-[var(--neon-cyan)] hover:bg-[var(--surface)]'
+                    ? 'text-[var(--neon-cyan)] bg-[var(--neon-cyan)]/10'
+                    : 'text-[var(--text-secondary)] hover:text-[var(--neon-cyan)] hover:bg-[var(--surface)]'
                     }`}
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.95 }}

@@ -90,7 +90,7 @@ export default function HoloCard({
                     background: `radial-gradient(
             circle at 50% 50%,
             rgba(255, 255, 255, 0.2) 0%,
-            transparent 50%
+            transparent 40%
           )`,
                     x: shineX,
                     y: shineY,

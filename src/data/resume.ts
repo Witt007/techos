@@ -89,19 +89,19 @@ export const resumeData: ResumeData = {
             company: { en: 'Enterprise Tech Solutions', zh: '企业科技解决方案有限公司' },
             position: { en: 'Technical Lead & Project Director', zh: '技术负责人 & 项目总监' },
             location: { en: 'Shanghai, China', zh: '中国上海' },
-            startDate: '2022',
+            startDate: '2024',
             endDate: { en: 'Present', zh: '至今' },
             highlights: {
                 en: [
-                    'Led development of Smart City Digital Twin Platform serving 100+ government departments',
+                    'Led development of Smart City Digital Twin Platform serving 50+ government departments',
                     'Architected real-time visualization system processing 10M+ IoT sensors',
-                    'Managed cross-functional team of 20+ engineers and designers',
+                    'Managed cross-functional team of 10+ engineers and designers',
                     'Reduced urban incident response time by 40% through AI-powered analytics',
                 ],
                 zh: [
-                    '领导智慧城市数字孪生平台开发，服务100+政府部门',
+                    '领导智慧城市数字孪生平台开发，服务50+政府部门',
                     '架构实时可视化系统，处理1000万+物联网传感器数据',
-                    '管理20+工程师和设计师的跨职能团队',
+                    '管理10+工程师和设计师的跨职能团队',
                     '通过AI驱动分析，将城市事件响应时间缩短40%',
                 ],
             },
@@ -110,8 +110,8 @@ export const resumeData: ResumeData = {
             company: { en: 'Digital Innovation Lab', zh: '数字创新实验室' },
             position: { en: 'Senior Full-Stack Engineer', zh: '高级全栈工程师' },
             location: { en: 'Shanghai, China', zh: '中国上海' },
-            startDate: '2020',
-            endDate: { en: '2022', zh: '2022' },
+            startDate: '2023',
+            endDate: { en: '2024', zh: '2024' },
             highlights: {
                 en: [
                     'Developed Industrial Metaverse Platform reducing equipment downtime by 35%',
@@ -131,8 +131,8 @@ export const resumeData: ResumeData = {
             company: { en: 'GeoTech Systems', zh: '地理科技系统公司' },
             position: { en: 'Visualization Engineer', zh: '可视化工程师' },
             location: { en: 'Shanghai, China', zh: '中国上海' },
-            startDate: '2018',
-            endDate: { en: '2020', zh: '2020' },
+            startDate: '2019',
+            endDate: { en: '2023', zh: '2023' },
             highlights: {
                 en: [
                     'Built GIS analytics platform processing 50TB+ spatial data daily',
@@ -154,16 +154,16 @@ export const resumeData: ResumeData = {
             institution: { en: 'University of Technology', zh: '理工大学' },
             degree: { en: 'Master of Science', zh: '理学硕士' },
             field: { en: 'Computer Science', zh: '计算机科学' },
-            startDate: '2015',
-            endDate: '2017',
+            startDate: '2021',
+            endDate: '2023',
             location: { en: 'International', zh: '海外' },
         },
         {
-            institution: { en: 'Technical University', zh: '工业大学' },
-            degree: { en: 'Bachelor of Engineering', zh: '工学学士' },
-            field: { en: 'Software Engineering', zh: '软件工程' },
-            startDate: '2011',
-            endDate: '2015',
+            institution: { en: 'Zhejiang Wanli University', zh: '浙江万里学院' },
+            degree: { en: 'Bachelor of Management', zh: '管理学学士' },
+            field: { en: 'Information Management & Information Systems', zh: '信息管理与信息系统' },
+            startDate: '2015',
+            endDate: '2019',
             location: { en: 'China', zh: '中国' },
         },
     ],
@@ -196,6 +196,6 @@ export const resumeData: ResumeData = {
     ],
     languages: [
         { language: { en: 'Chinese', zh: '中文' }, proficiency: { en: 'Native', zh: '母语' } },
-        { language: { en: 'English', zh: '英语' }, proficiency: { en: 'Professional', zh: '专业水平' } },
+        { language: { en: 'English', zh: '英语' }, proficiency: { en: 'Fluent', zh: '熟练' } },
     ],
 };
