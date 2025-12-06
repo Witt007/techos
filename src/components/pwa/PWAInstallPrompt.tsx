@@ -104,7 +104,7 @@ export default function PWAInstallPrompt() {
                         {/* Content */}
                         <div className="flex-1">
                             <h3 className="font-bold text-[var(--text-primary)] mb-1">
-                                Install NexusForge
+                                Install Techos
                             </h3>
                             <p className="text-sm text-[var(--text-muted)] mb-3">
                                 Add to your home screen for quick access and offline viewing.

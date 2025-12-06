@@ -16,12 +16,12 @@ const getParticleCount = (tier: string) => {
   }
 };
 
-interface ParticleFieldProps {
+export interface ParticleFieldProps {
   count?: number;
   mouse: React.RefObject<{ x: number; y: number } | null>;
 }
 
-function ParticleField({ count = 5000, mouse }: ParticleFieldProps) {
+export function ParticleField({ count = 5000, mouse }: ParticleFieldProps) {
   const pointsRef = useRef<THREE.Points>(null);
   const { viewport } = useThree();
 
@@ -150,7 +150,7 @@ function ParticleField({ count = 5000, mouse }: ParticleFieldProps) {
 }
 
 // Floating geometric shapes
-function FloatingGeometries() {
+export function FloatingGeometries() {
   const groupRef = useRef<THREE.Group>(null);
 
   useFrame((state) => {
@@ -194,7 +194,7 @@ function FloatingGeometries() {
 }
 
 // Grid floor
-function CyberGrid() {
+export function CyberGrid() {
   const gridRef = useRef<THREE.GridHelper>(null);
 
   useFrame((state) => {
@@ -216,6 +216,25 @@ function CyberGrid() {
 interface ParticleUniverseProps {
   performanceTier?: 'ultra' | 'high' | 'medium' | 'low';
   className?: string;
+}
+
+export function ParticleUniverseScene({ performanceTier = 'high', mouseRef }: { performanceTier?: string, mouseRef: React.RefObject<{ x: number; y: number }> }) {
+  const particleCount = getParticleCount(performanceTier);
+
+  return (
+    <>
+      <color attach="background" args={['#030308']} />
+      <fog attach="fog" args={['#030308', 10, 50]} />
+
+      <ParticleField count={particleCount} mouse={mouseRef} />
+
+      {performanceTier !== 'low' && <FloatingGeometries />}
+      {performanceTier !== 'low' && <CyberGrid />}
+
+      {/* Ambient light for subtle illumination */}
+      <ambientLight intensity={0.1} />
+    </>
+  );
 }
 
 export default function ParticleUniverse({
@@ -247,8 +266,6 @@ export default function ParticleUniverse({
     );
   }
 
-  const particleCount = getParticleCount(performanceTier);
-
   return (
     <div className={`particles-container ${className}`}>
       <Canvas
@@ -261,16 +278,7 @@ export default function ParticleUniverse({
         }}
         style={{ background: 'transparent' }}
       >
-        <color attach="background" args={['#030308']} />
-        <fog attach="fog" args={['#030308', 10, 50]} />
-
-        <ParticleField count={particleCount} mouse={mouseRef} />
-
-        {performanceTier !== 'low' && <FloatingGeometries />}
-        {performanceTier !== 'low' && <CyberGrid />}
-
-        {/* Ambient light for subtle illumination */}
-        <ambientLight intensity={0.1} />
+        <ParticleUniverseScene performanceTier={performanceTier} mouseRef={mouseRef} />
       </Canvas>
     </div>
   );

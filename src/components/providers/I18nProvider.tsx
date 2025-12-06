@@ -251,7 +251,7 @@ const translations: Record<Locale, Translations> = {
                 send: '发送消息',
             },
             ai: {
-                greeting: '你好！我是NexusForge AI助手。今天我能帮您什么？',
+                greeting: '你好！我是Techos AI助手。今天我能帮您什么？',
                 placeholder: '随便问我...',
                 quickQuestions: '快速提问：',
             },

@@ -100,7 +100,7 @@ export default function AdminDashboardPage() {
                         <span className="font-bold text-lg text-white">N</span>
                     </div>
                     <div>
-                        <div className="font-bold font-[family-name:var(--font-display)]">NexusForge</div>
+                        <div className="font-bold font-[family-name:var(--font-display)]">Techos</div>
                         <div className="text-xs text-[var(--text-muted)]">Admin Panel</div>
                     </div>
                 </Link>
@@ -111,8 +111,8 @@ export default function AdminDashboardPage() {
                             key={item.label}
                             href={item.href}
                             className={`flex items-center gap-3 p-3 rounded-lg mb-1 transition-colors ${item.active
-                                    ? 'bg-[var(--neon-cyan)]/10 text-[var(--neon-cyan)] border border-[var(--neon-cyan)]/30'
-                                    : 'text-[var(--text-secondary)] hover:bg-[var(--void-light)] hover:text-[var(--text-primary)]'
+                                ? 'bg-[var(--neon-cyan)]/10 text-[var(--neon-cyan)] border border-[var(--neon-cyan)]/30'
+                                : 'text-[var(--text-secondary)] hover:bg-[var(--void-light)] hover:text-[var(--text-primary)]'
                                 }`}
                         >
                             <item.icon size={18} />

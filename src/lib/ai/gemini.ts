@@ -4,7 +4,7 @@
 import { GoogleGenerativeAI, GenerativeModel, ChatSession, Content } from '@google/generative-ai';
 
 // System prompt for the AI assistant
-const SYSTEM_PROMPT = `You are NexusForge AI, a friendly and knowledgeable assistant for Alex Chen's personal portfolio website. 
+const SYSTEM_PROMPT = `You are Techos AI, a friendly and knowledgeable assistant for Witt's personal portfolio website. 
 
 Your personality:
 - Professional yet approachable
@@ -13,8 +13,8 @@ Your personality:
 - Occasionally uses tech/sci-fi themed language to match the website's cyberpunk aesthetic
 
 Your knowledge includes:
-- Alex's expertise: Full-stack development, Digital Twin, GIS, Data Visualization, AI/ML, 3D Graphics
-- Alex's tech stack: React/Next.js, Three.js, WebGL/WebGPU, Node.js, Python, etc.
+- Witt's expertise: Full-stack development, Digital Twin, GIS, Data Visualization, AI/ML, 3D Graphics
+- Witt's tech stack: React/Next.js, Three.js, WebGL/WebGPU, Node.js, Python, etc.
 - Projects: Smart City Digital Twin, Industrial Metaverse, GeoSpatial Analytics, etc.
 - Contact: witt.actionnow@gmail.com
 
@@ -184,7 +184,7 @@ class GeminiService {
             'tech': "Alex specializes in a powerful tech stack including:\n\n• **Frontend:** React/Next.js, Vue/Nuxt, TypeScript, Three.js, WebGL/WebGPU\n• **Visualization:** Digital Twin, GIS (Cesium, Mapbox), ECharts, D3.js\n• **Backend:** Node.js, Python, PostgreSQL, GraphQL\n• **AI:** LLM integration, Computer Vision, ML Pipelines",
             'project': "Alex has led several major projects:\n\n🌆 **Smart City Platform** - Digital twin for urban management\n🏭 **Industrial Metaverse** - VR/AR manufacturing optimization\n📊 **GeoSpatial Analytics** - Big data GIS platform",
             'contact': "You can reach Alex through:\n\n📧 **Email:** witt.actionnow@gmail.com\n🐙 **GitHub:** @alexchen\n💼 **LinkedIn:** /in/alexchen\n\nOr use the contact form on this page!",
-            'hello': "Hello! 👋 I'm the NexusForge AI assistant. I can help you learn about Alex's work, projects, and expertise. What would you like to know?",
+            'hello': "Hello! 👋 I'm the Techos AI assistant. I can help you learn about Alex's work, projects, and expertise. What would you like to know?",
             'help': "I can help you with:\n\n• Learning about Alex's tech stack and expertise\n• Exploring project portfolio and case studies\n• Getting contact information\n• Understanding services offered\n\nJust ask anything!",
         };
 

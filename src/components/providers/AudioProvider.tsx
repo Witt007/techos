@@ -16,6 +16,9 @@ interface AudioContextType {
     playIntroduction: () => void;
     stopIntroduction: () => void;
     playSound: (type: 'click' | 'hover' | 'success' | 'error') => void;
+    analyser: AnalyserNode | null;
+    startMicrophone: () => Promise<void>;
+    stopMicrophone: () => void;
 }
 
 const AudioContext = createContext<AudioContextType | undefined>(undefined);
@@ -56,6 +59,8 @@ export function AudioProvider({ children }: { children: ReactNode }) {
     const synthRef = useRef<SpeechSynthesis | null>(null);
     const utteranceRef = useRef<SpeechSynthesisUtterance | null>(null);
     const bgMusicRef = useRef<HTMLAudioElement | null>(null);
+    const microphoneRef = useRef<MediaStreamAudioSourceNode | null>(null);
+    const analyserRef = useRef<AnalyserNode | null>(null);
 
     useEffect(() => {
         setMounted(true);
@@ -283,6 +288,49 @@ export function AudioProvider({ children }: { children: ReactNode }) {
         }
     }, [isEnabled, isMuted]);
 
+    // Microphone handling
+    const startMicrophone = useCallback(async () => {
+        if (!audioContextRef.current) {
+            audioContextRef.current = new (window.AudioContext || (window as any).webkitAudioContext)();
+        }
+
+        const ctx = audioContextRef.current;
+        if (ctx.state === 'suspended') {
+            await ctx.resume();
+        }
+
+        try {
+            const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+            const source = ctx.createMediaStreamSource(stream);
+            const analyser = ctx.createAnalyser();
+            analyser.fftSize = 256;
+            source.connect(analyser);
+
+            microphoneRef.current = source;
+            analyserRef.current = analyser;
+
+            // Force re-render to expose analyser
+            setMounted(prev => !prev);
+        } catch (err) {
+            console.error('Error accessing microphone:', err);
+        }
+    }, []);
+
+    const stopMicrophone = useCallback(() => {
+        if (microphoneRef.current) {
+            microphoneRef.current.disconnect();
+            // Stop tracks to release microphone
+            if (microphoneRef.current.mediaStream) {
+                microphoneRef.current.mediaStream.getTracks().forEach(track => track.stop());
+            }
+            microphoneRef.current = null;
+        }
+        if (analyserRef.current) {
+            analyserRef.current.disconnect();
+            analyserRef.current = null;
+        }
+    }, []);
+
     return (
         <AudioContext.Provider
             value={{
@@ -295,6 +343,9 @@ export function AudioProvider({ children }: { children: ReactNode }) {
                 playIntroduction,
                 stopIntroduction,
                 playSound,
+                analyser: analyserRef.current,
+                startMicrophone,
+                stopMicrophone,
             }}
         >
             {children}

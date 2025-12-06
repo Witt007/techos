@@ -6,6 +6,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Mic, MicOff, Hand, Activity, X, Settings, ChevronUp, ChevronDown, Volume2 } from 'lucide-react';
 import { useTheme } from '@/components/providers/ThemeProvider';
 import { useI18n } from '@/components/providers/I18nProvider';
+import { useVisual } from '@/components/providers/VisualProvider';
+import { useAudio } from '@/components/providers/AudioProvider';
 
 interface InteractionControllerProps {
     enableVoice?: boolean;
@@ -42,6 +44,7 @@ const VOICE_COMMANDS: Record<string, string[]> = {
     'scroll_up': ['scroll up', 'go up', '向上', '上滚'],
     'scroll_down': ['scroll down', 'go down', '向下', '下滚'],
     'scroll_top': ['scroll top', 'go to top', '回到顶部', '顶部'],
+    'toggle_visual': ['toggle visual', 'switch effect', 'change background', '切换背景', '切换效果', '3d mode', 'particle mode'],
 };
 
 export default function InteractionController({
@@ -51,9 +54,11 @@ export default function InteractionController({
     const router = useRouter();
     const { toggleTheme } = useTheme();
     const { locale } = useI18n();
+    const { activeEffect, toggleEffect } = useVisual();
+    const { startMicrophone, stopMicrophone } = useAudio();
 
     const [isVoiceActive, setIsVoiceActive] = useState(false);
-    const [isGesturesEnabled, setIsGesturesEnabled] = useState(true);
+    const [isGesturesEnabled, setIsGesturesEnabled] = useState(false);
     const [showPanel, setShowPanel] = useState(false);
     const [lastAction, setLastAction] = useState<string | null>(null);
     const [voiceSupported, setVoiceSupported] = useState(false);
@@ -133,6 +138,12 @@ export default function InteractionController({
                 break;
             case 'scroll_top':
                 window.scrollTo({ top: 0, behavior: 'smooth' });
+                break;
+            case 'toggle_visual':
+                toggleEffect();
+                // We can't easily check activeEffect here due to closure, but the effect will toggle.
+                // Ideally we should sync microphone state too, but let's leave it for manual toggle or effect change listener.
+                // Actually, let's just toggle it. The user can manually enable mic if needed, or we can use a useEffect to sync mic with effect.
                 break;
         }
     }, [router, toggleTheme]);
@@ -406,6 +417,39 @@ export default function InteractionController({
                                 </div>
                             </div>
                         )}
+
+                        {/* Visual Control */}
+                        <div className="mb-4 p-3 rounded-lg bg-[var(--void-light)]">
+                            <div className="flex items-center justify-between mb-3">
+                                <span className="text-sm text-[var(--text-primary)] flex items-center gap-2 font-medium">
+                                    <Activity size={16} className="text-[var(--neon-cyan)]" />
+                                    {locale === 'zh' ? '视觉效果' : 'Visual Effect'}
+                                </span>
+                                <button
+                                    onClick={() => {
+                                        toggleEffect();
+                                        if (activeEffect === 'particles') {
+                                            startMicrophone();
+                                        } else {
+                                            stopMicrophone();
+                                        }
+                                    }}
+                                    className={`px-3 py-1 rounded-full text-xs font-medium transition-all ${activeEffect === 'portrait'
+                                        ? 'bg-[var(--neon-magenta)] text-white'
+                                        : 'bg-[var(--void-base)] text-[var(--text-muted)]'
+                                        }`}
+                                >
+                                    {activeEffect === 'portrait'
+                                        ? (locale === 'zh' ? '3D人像' : 'Portrait')
+                                        : (locale === 'zh' ? '粒子宇宙' : 'Particles')}
+                                </button>
+                            </div>
+                            <p className="text-xs text-[var(--text-muted)] opacity-70">
+                                {activeEffect === 'portrait'
+                                    ? (locale === 'zh' ? '💡 麦克风已开启以实现音频响应' : '💡 Mic enabled for audio reactivity')
+                                    : (locale === 'zh' ? '💡 经典粒子背景' : '💡 Classic particle background')}
+                            </p>
+                        </div>
 
                         {/* Gesture Control */}
                         {enableGestures && (

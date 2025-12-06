@@ -9,8 +9,8 @@ export const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://nexusforge.
 export const defaultMetadata: Metadata = {
     metadataBase: new URL(BASE_URL),
     title: {
-        default: 'NexusForge | Creative Engineer Portfolio',
-        template: '%s | NexusForge',
+        default: 'Witt | Creative Engineer Portfolio',
+        template: '%s | Witt',
     },
     description: 'Full-stack developer portfolio showcasing work in AI, Digital Twin, GIS, Data Visualization, and 3D Technology.',
     keywords: ['Full-Stack Developer', 'Creative Engineer', 'Digital Twin', 'GIS', 'Data Visualization', 'Three.js', 'WebGL', 'AI', 'Portfolio'],
@@ -33,21 +33,21 @@ export const defaultMetadata: Metadata = {
         locale: 'en_US',
         alternateLocale: 'zh_CN',
         url: BASE_URL,
-        siteName: 'NexusForge',
-        title: 'NexusForge | Creative Engineer Portfolio',
+        siteName: 'Witt',
+        title: 'Witt | Creative Engineer Portfolio',
         description: 'Crafting Digital Realities at the Intersection of Art & Technology',
         images: [
             {
                 url: `${BASE_URL}/og-image.png`,
                 width: 1200,
                 height: 630,
-                alt: 'NexusForge Portfolio',
+                alt: 'Witt Portfolio',
             },
         ],
     },
     twitter: {
         card: 'summary_large_image',
-        title: 'NexusForge | Creative Engineer Portfolio',
+        title: 'Witt | Creative Engineer Portfolio',
         description: 'Crafting Digital Realities at the Intersection of Art & Technology',
         creator: '@alexchen',
         images: [`${BASE_URL}/twitter-image.png`],
@@ -83,7 +83,7 @@ export function getPersonJsonLd() {
         jobTitle: 'Creative Engineer & Full-Stack Developer',
         worksFor: {
             '@type': 'Organization',
-            name: 'NexusForge',
+            name: 'Techos',
         },
         knowsAbout: [
             'Web Development',
@@ -102,7 +102,7 @@ export function getWebsiteJsonLd() {
     return {
         '@context': 'https://schema.org',
         '@type': 'WebSite',
-        name: 'NexusForge',
+        name: 'Techos',
         url: BASE_URL,
         description: 'Creative Engineer Portfolio - AI, Digital Twin, 3D Visualization',
         author: getPersonJsonLd(),
@@ -138,7 +138,7 @@ export function getBlogPostJsonLd(post: {
         },
         publisher: {
             '@type': 'Organization',
-            name: 'NexusForge',
+            name: 'Techos',
             logo: {
                 '@type': 'ImageObject',
                 url: `${BASE_URL}/logo.png`,
