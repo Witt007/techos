@@ -203,7 +203,7 @@ h6 {
 
 .text-neon-cyan {
   color: var(--void-base);
-  text-shadow: 0 0 10px var(--neon-cyan), 0 0 20px var(--neon-cyan), 0 0 30px var(--neon-cyan);
+  text-shadow: 0 0 10px #ffb100, 0 0 19px #2e4dbf, 0 0 10px #411055
 }
 
 .text-neon-magenta {

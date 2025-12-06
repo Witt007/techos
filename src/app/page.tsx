@@ -144,7 +144,7 @@ export default function HomePage() {
           </motion.div>
 
           {/* Main title */}
-          <motion.div
+          <motion.div style={{ background: "transparent" }}
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: introComplete ? 1 : 0, y: introComplete ? 0 : 30 }}
             transition={{ delay: 0.4, duration: 0.8 }}
