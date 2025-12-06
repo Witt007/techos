@@ -200,14 +200,14 @@ export function CyberGrid() {
   useFrame((state) => {
     if (!gridRef.current) return;
     const time = state.clock.elapsedTime;
-    (gridRef.current.material as THREE.Material).opacity = 0.15 + Math.sin(time * 0.5) * 0.05;
+    (gridRef.current.material as THREE.Material).opacity = 0.85 + Math.sin(time * 0.5) * 0.305;
   });
 
   return (
     <gridHelper
       ref={gridRef}
-      args={[100, 50, '#00fff5', '#1a1a2e']}
-      position={[0, -8, -20]}
+      args={[100, 50, 'rgba(61, 126, 163, 0.5)', 'rgba(61, 126, 163, 0.5)']}
+      position={[0, -16, -20]}
       rotation={[0, 0, 0]}
     />
   );

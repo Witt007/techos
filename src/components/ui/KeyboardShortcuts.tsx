@@ -156,7 +156,7 @@ export default function KeyboardShortcuts({
 
             {/* Shortcut hint (bottom right) */}
             <motion.div
-                className="fixed bottom-4 right-4 z-50 hidden sm:block"
+                className="fixed bottom-2 right-4 z-50 hidden sm:block"
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 2 }}

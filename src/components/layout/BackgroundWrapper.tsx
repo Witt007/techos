@@ -55,14 +55,17 @@ export default function BackgroundWrapper() {
                     >
                         <ambientLight intensity={0.5} />
                         <Suspense fallback={null}>
-                            {activeEffect === 'portrait' ? (
-                                <PortraitScene analyser={analyser} />
-                            ) : (
+                            {(
                                 <ParticleUniverseScene
                                     performanceTier={capabilities.performanceTier}
                                     mouseRef={mouseRef}
                                 />
                             )}
+                        </Suspense>
+                        <Suspense fallback={null}>
+                            {activeEffect === 'portrait' ? (
+                                <PortraitScene analyser={analyser} />
+                            ) : null}
                         </Suspense>
                     </Canvas>
                 </div>

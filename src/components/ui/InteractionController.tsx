@@ -323,7 +323,7 @@ export default function InteractionController({
             {/* Floating Control Button */}
             <motion.button
                 onClick={() => setShowPanel(prev => !prev)}
-                className="fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full 
+                className="fixed bottom-14 right-6 z-50 w-14 h-14 rounded-full 
                     bg-gradient-to-br from-[var(--neon-cyan)] to-[var(--neon-magenta)]
                     text-white shadow-lg shadow-[var(--neon-cyan)]/30
                     flex items-center justify-center print:hidden"
@@ -440,7 +440,7 @@ export default function InteractionController({
                                         }`}
                                 >
                                     {activeEffect === 'portrait'
-                                        ? (locale === 'zh' ? '3D人像' : 'Portrait')
+                                        ? (locale === 'zh' ? '粒子对象' : 'Portrait')
                                         : (locale === 'zh' ? '粒子宇宙' : 'Particles')}
                                 </button>
                             </div>

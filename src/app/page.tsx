@@ -52,12 +52,12 @@ export default function HomePage() {
 
   // Boot sequence text based on locale
   const bootSequence = locale === 'zh' ? [
-    '> 正在初始化 NexusForge v2.0...',
+    '> 正在初始化 Techos v2.0...',
     '> 加载神经接口...',
     '> 建立量子链接...',
     '> 系统就绪。欢迎，访客。'
   ] : [
-    '> Initializing NexusForge v2.0...',
+    '> Initializing Techos v2.0...',
     '> Loading neural interface...',
     '> Establishing quantum link...',
     '> System ready. Welcome, visitor.'

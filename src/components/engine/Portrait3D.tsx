@@ -67,7 +67,7 @@ void main() {
   vec2 coord = gl_PointCoord - vec2(0.5);
     if (length(coord) > 0.5) discard;
 
-    gl_FragColor = vec4(texColor.rgb, texColor.a * vAlpha);
+    gl_FragColor = vec4(texColor.rg, texColor.b+length(coord), texColor.a * vAlpha);
 }
 `;
 
@@ -94,7 +94,7 @@ export default function PortraitScene({ imageUrl = '/portrait-placeholder.jpg', 
 
         // Aspect ratio correction
         const aspect = 4 / 5;
-        const scale = 5.0;
+        const scale = 15.0;
 
         for (let i = 0; i < width; i++) {
             for (let j = 0; j < height; j++) {
