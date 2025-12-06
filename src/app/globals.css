@@ -1,0 +1,597 @@
+@import "tailwindcss";
+
+/* ========================================
+   NexusForge - Cyberpunk Design System
+   ======================================== */
+
+:root {
+  /* Core Void Colors */
+  --void-deepest: #030308;
+  --void-deep: #0a0a12;
+  --void-base: #0f0f1a;
+  --void-light: #1a1a2e;
+  --void-lighter: #252542;
+  
+  /* Neon Accent Colors */
+  --neon-cyan: #00fff5;
+  --neon-cyan-dim: #00b8b0;
+  --neon-magenta: #ff00ff;
+  --neon-magenta-dim: #b800b8;
+  --neon-amber: #ffd700;
+  --neon-amber-dim: #b89b00;
+  --neon-purple: #bf00ff;
+  --neon-blue: #0080ff;
+  --neon-green: #00ff80;
+  
+  /* Semantic Colors */
+  --primary: var(--neon-cyan);
+  --secondary: var(--neon-magenta);
+  --accent: var(--neon-amber);
+  --success: var(--neon-green);
+  --warning: var(--neon-amber);
+  --error: #ff3366;
+  
+  /* Text Colors */
+  --text-primary: #ffffff;
+  --text-secondary: #a0a0b0;
+  --text-muted: #606070;
+  --text-glow: var(--neon-cyan);
+  
+  /* Background */
+  --background: var(--void-deepest);
+  --foreground: var(--text-primary);
+  --surface: rgba(15, 15, 26, 0.8);
+  --surface-hover: rgba(25, 25, 46, 0.9);
+  
+  /* Holographic */
+  --hologram: rgba(0, 255, 245, 0.05);
+  --hologram-border: rgba(0, 255, 245, 0.2);
+  --hologram-glow: rgba(0, 255, 245, 0.3);
+  
+  /* Glass */
+  --glass-bg: rgba(10, 10, 18, 0.7);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  
+  /* Shadows & Glows */
+  --glow-cyan: 0 0 20px rgba(0, 255, 245, 0.5), 0 0 40px rgba(0, 255, 245, 0.3), 0 0 60px rgba(0, 255, 245, 0.1);
+  --glow-magenta: 0 0 20px rgba(255, 0, 255, 0.5), 0 0 40px rgba(255, 0, 255, 0.3);
+  --glow-amber: 0 0 20px rgba(255, 215, 0, 0.5), 0 0 40px rgba(255, 215, 0, 0.3);
+  --glow-text: 0 0 10px currentColor, 0 0 20px currentColor;
+  
+  /* Typography */
+  --font-display: 'Orbitron', 'Exo 2', system-ui, sans-serif;
+  --font-body: 'Exo 2', 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+  
+  /* Spacing */
+  --section-padding: clamp(2rem, 8vw, 6rem);
+  
+  /* Animation */
+  --ease-cyber: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-glitch: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  
+  /* Scanlines */
+  --scanline-opacity: 0.03;
+}
+
+/* Light Theme */
+[data-theme="light"] {
+  --void-deepest: #f8f9fc;
+  --void-deep: #eef0f5;
+  --void-base: #e4e7ef;
+  --void-light: #d4d8e4;
+  --void-lighter: #c4c9d9;
+  
+  --neon-cyan: #0088aa;
+  --neon-magenta: #aa0088;
+  --neon-amber: #aa8800;
+  
+  --text-primary: #0a0a12;
+  --text-secondary: #404050;
+  --text-muted: #808090;
+  
+  --background: var(--void-deepest);
+  --surface: rgba(255, 255, 255, 0.8);
+  --surface-hover: rgba(255, 255, 255, 0.95);
+  --glass-bg: rgba(255, 255, 255, 0.7);
+  --glass-border: rgba(0, 0, 0, 0.1);
+  
+  --scanline-opacity: 0;
+}
+
+/* ========================================
+   Theme Tailwind Integration
+   ======================================== */
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-primary: var(--primary);
+  --color-secondary: var(--secondary);
+  --color-accent: var(--accent);
+  --color-surface: var(--surface);
+  --color-void: var(--void-base);
+  --font-sans: var(--font-body);
+  --font-mono: var(--font-mono);
+  --font-display: var(--font-display);
+}
+
+/* ========================================
+   Base Styles
+   ======================================== */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-body);
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* Scanline Effect Overlay */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, var(--scanline-opacity)) 2px,
+    rgba(0, 0, 0, var(--scanline-opacity)) 4px
+  );
+}
+
+/* Selection */
+::selection {
+  background: var(--neon-cyan);
+  color: var(--void-deepest);
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--void-deep);
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--neon-cyan), var(--neon-magenta));
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, var(--neon-cyan), var(--neon-purple));
+}
+
+/* ========================================
+   Typography
+   ======================================== */
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: 0.02em;
+}
+
+.text-glow {
+  text-shadow: var(--glow-text);
+}
+
+.text-neon-cyan {
+  color: var(--neon-cyan);
+  text-shadow: 0 0 10px var(--neon-cyan), 0 0 20px var(--neon-cyan), 0 0 30px var(--neon-cyan);
+}
+
+.text-neon-magenta {
+  color: var(--neon-magenta);
+  text-shadow: 0 0 10px var(--neon-magenta), 0 0 20px var(--neon-magenta);
+}
+
+/* ========================================
+   Glitch Effect
+   ======================================== */
+
+.glitch {
+  position: relative;
+}
+
+.glitch::before,
+.glitch::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.8;
+}
+
+.glitch::before {
+  animation: glitch-1 0.3s infinite linear alternate-reverse;
+  color: var(--neon-cyan);
+  z-index: -1;
+}
+
+.glitch::after {
+  animation: glitch-2 0.3s infinite linear alternate-reverse;
+  color: var(--neon-magenta);
+  z-index: -2;
+}
+
+@keyframes glitch-1 {
+  0%, 100% { clip-path: inset(20% 0 30% 0); transform: translate(-2px, 2px); }
+  25% { clip-path: inset(50% 0 20% 0); transform: translate(2px, -2px); }
+  50% { clip-path: inset(10% 0 60% 0); transform: translate(-1px, 1px); }
+  75% { clip-path: inset(40% 0 10% 0); transform: translate(1px, -1px); }
+}
+
+@keyframes glitch-2 {
+  0%, 100% { clip-path: inset(60% 0 10% 0); transform: translate(2px, -2px); }
+  25% { clip-path: inset(10% 0 50% 0); transform: translate(-2px, 2px); }
+  50% { clip-path: inset(30% 0 40% 0); transform: translate(1px, -1px); }
+  75% { clip-path: inset(70% 0 5% 0); transform: translate(-1px, 1px); }
+}
+
+/* ========================================
+   Holographic Panel
+   ======================================== */
+
+.holo-panel {
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--hologram-border);
+  border-radius: 8px;
+  position: relative;
+  overflow: hidden;
+}
+
+.holo-panel::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(0, 255, 245, 0.1) 0%,
+    transparent 50%,
+    rgba(255, 0, 255, 0.05) 100%
+  );
+  pointer-events: none;
+}
+
+.holo-panel::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    to bottom right,
+    transparent 40%,
+    rgba(255, 255, 255, 0.1) 50%,
+    transparent 60%
+  );
+  transform: rotate(45deg);
+  animation: holo-shine 8s infinite linear;
+  pointer-events: none;
+}
+
+@keyframes holo-shine {
+  from { transform: translateX(-100%) rotate(45deg); }
+  to { transform: translateX(100%) rotate(45deg); }
+}
+
+/* ========================================
+   Cyber Button
+   ======================================== */
+
+.cyber-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.875rem 2rem;
+  font-family: var(--font-display);
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--neon-cyan);
+  background: transparent;
+  border: 2px solid var(--neon-cyan);
+  cursor: pointer;
+  overflow: hidden;
+  transition: all 0.3s var(--ease-cyber);
+  clip-path: polygon(
+    0 0,
+    calc(100% - 12px) 0,
+    100% 12px,
+    100% 100%,
+    12px 100%,
+    0 calc(100% - 12px)
+  );
+}
+
+.cyber-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--neon-cyan);
+  transform: translateX(-101%);
+  transition: transform 0.3s var(--ease-cyber);
+  z-index: -1;
+}
+
+.cyber-btn:hover {
+  color: var(--void-deepest);
+  box-shadow: var(--glow-cyan);
+}
+
+.cyber-btn:hover::before {
+  transform: translateX(0);
+}
+
+.cyber-btn:active {
+  transform: scale(0.98);
+}
+
+/* Cyber Button Variants */
+.cyber-btn--magenta {
+  color: var(--neon-magenta);
+  border-color: var(--neon-magenta);
+}
+
+.cyber-btn--magenta::before {
+  background: var(--neon-magenta);
+}
+
+.cyber-btn--magenta:hover {
+  box-shadow: var(--glow-magenta);
+}
+
+.cyber-btn--filled {
+  background: var(--neon-cyan);
+  color: var(--void-deepest);
+}
+
+.cyber-btn--filled::before {
+  background: var(--void-light);
+}
+
+.cyber-btn--filled:hover {
+  color: var(--neon-cyan);
+}
+
+/* ========================================
+   Circuit Border
+   ======================================== */
+
+.circuit-border {
+  position: relative;
+}
+
+.circuit-border::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  background: linear-gradient(90deg, 
+    var(--neon-cyan), 
+    var(--neon-magenta), 
+    var(--neon-cyan)
+  );
+  background-size: 200% 100%;
+  animation: circuit-flow 3s linear infinite;
+  z-index: -1;
+  border-radius: inherit;
+}
+
+.circuit-border::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--void-base);
+  border-radius: inherit;
+  z-index: -1;
+}
+
+@keyframes circuit-flow {
+  from { background-position: 0% 0%; }
+  to { background-position: 200% 0%; }
+}
+
+/* ========================================
+   Floating Particles Background
+   ======================================== */
+
+.particles-container {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+/* ========================================
+   Navigation
+   ======================================== */
+
+.nav-link {
+  position: relative;
+  color: var(--text-secondary);
+  font-family: var(--font-display);
+  font-size: 0.75rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  text-decoration: none;
+  padding: 0.5rem 0;
+  transition: color 0.3s ease;
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--neon-cyan), var(--neon-magenta));
+  transition: width 0.3s var(--ease-cyber);
+}
+
+.nav-link:hover {
+  color: var(--neon-cyan);
+}
+
+.nav-link:hover::after {
+  width: 100%;
+}
+
+.nav-link--active {
+  color: var(--neon-cyan);
+}
+
+.nav-link--active::after {
+  width: 100%;
+}
+
+/* ========================================
+   Card Styles
+   ======================================== */
+
+.holo-card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--glass-border);
+  border-radius: 12px;
+  padding: 1.5rem;
+  transition: all 0.4s var(--ease-cyber);
+  transform-style: preserve-3d;
+  perspective: 1000px;
+}
+
+.holo-card:hover {
+  border-color: var(--hologram-border);
+  box-shadow: 
+    0 0 30px rgba(0, 255, 245, 0.1),
+    0 20px 40px rgba(0, 0, 0, 0.3);
+  transform: translateY(-5px);
+}
+
+/* ========================================
+   Loading States
+   ======================================== */
+
+.cyber-loader {
+  width: 48px;
+  height: 48px;
+  border: 3px solid transparent;
+  border-top-color: var(--neon-cyan);
+  border-bottom-color: var(--neon-magenta);
+  border-radius: 50%;
+  animation: cyber-spin 1s linear infinite;
+}
+
+@keyframes cyber-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* ========================================
+   Animations
+   ======================================== */
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slide-up {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 20px var(--neon-cyan); }
+  50% { box-shadow: 0 0 40px var(--neon-cyan), 0 0 60px var(--neon-cyan); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.6s var(--ease-cyber) forwards;
+}
+
+.animate-slide-up {
+  animation: slide-up 0.8s var(--ease-cyber) forwards;
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+/* ========================================
+   Responsive Utilities
+   ======================================== */
+
+@media (max-width: 768px) {
+  :root {
+    --section-padding: 1.5rem;
+  }
+  
+  .cyber-btn {
+    padding: 0.75rem 1.5rem;
+    font-size: 0.75rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ========================================
+   Print Styles
+   ======================================== */
+
+@media print {
+  body::before {
+    display: none;
+  }
+  
+  .particles-container,
+  .cyber-loader {
+    display: none;
+  }
+}
