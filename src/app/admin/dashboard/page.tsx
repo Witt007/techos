@@ -11,36 +11,28 @@ import HoloCard from '@/components/ui/HoloCard';
 import GlitchText from '@/components/ui/GlitchText';
 import Link from 'next/link';
 
-// Mock analytics data
-const mockStats = {
-    totalVisitors: 12847,
-    activeUsers: 23,
-    avgSessionDuration: '4m 32s',
-    bounceRate: '32%',
-    pageViews: {
-        '/': 5420,
-        '/portfolio': 3210,
-        '/blog': 2845,
-        '/codelab': 1520,
-        '/products': 1102,
-        '/contact': 750,
-    },
-    trafficSources: [
-        { source: 'Direct', percentage: 35 },
-        { source: 'Google', percentage: 42 },
-        { source: 'GitHub', percentage: 15 },
-        { source: 'LinkedIn', percentage: 5 },
-        { source: 'Twitter', percentage: 3 },
-    ],
-    recentVisitors: [
-        { country: 'United States', city: 'San Francisco', time: '2 min ago', pages: 4 },
-        { country: 'China', city: 'Shanghai', time: '5 min ago', pages: 7 },
-        { country: 'Germany', city: 'Berlin', time: '8 min ago', pages: 2 },
-        { country: 'Japan', city: 'Tokyo', time: '12 min ago', pages: 5 },
-        { country: 'UK', city: 'London', time: '15 min ago', pages: 3 },
-    ],
-    dailyVisits: [320, 410, 380, 520, 480, 610, 590, 720, 680, 810, 750, 890],
-};
+interface TrafficSource {
+    source: string;
+    percentage: number;
+}
+
+interface RecentVisitor {
+    country: string;
+    city: string;
+    time: string;
+    pages: number;
+}
+
+interface AnalyticsStats {
+    totalVisitors: number;
+    activeUsers: number;
+    avgSessionDuration: string;
+    bounceRate: string;
+    pageViews: Record<string, number>;
+    trafficSources: TrafficSource[];
+    recentVisitors: RecentVisitor[];
+    dailyVisits: number[];
+}
 
 const sidebarItems = [
     { icon: Home, label: 'Dashboard', href: '/admin/dashboard', active: true },
@@ -52,6 +44,9 @@ const sidebarItems = [
 
 export default function AdminDashboardPage() {
     const [currentTime, setCurrentTime] = useState(new Date());
+    const [stats, setStats] = useState<AnalyticsStats | null>(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -60,36 +55,72 @@ export default function AdminDashboardPage() {
         return () => clearInterval(interval);
     }, []);
 
-    const statCards = [
-        {
-            label: 'Total Visitors',
-            value: mockStats.totalVisitors.toLocaleString(),
-            icon: Users,
-            color: 'var(--neon-cyan)',
-            change: '+12%'
-        },
-        {
-            label: 'Active Now',
-            value: mockStats.activeUsers,
-            icon: Activity,
-            color: 'var(--neon-green)',
-            change: ''
-        },
-        {
-            label: 'Avg. Session',
-            value: mockStats.avgSessionDuration,
-            icon: Clock,
-            color: 'var(--neon-amber)',
-            change: '+8%'
-        },
-        {
-            label: 'Bounce Rate',
-            value: mockStats.bounceRate,
-            icon: TrendingUp,
-            color: 'var(--neon-magenta)',
-            change: '-5%'
-        },
-    ];
+    useEffect(() => {
+        let isMounted = true;
+        const fetchStats = async () => {
+            try {
+                setLoading(true);
+                const res = await fetch('/api/analytics/stats');
+                if (!res.ok) {
+                    throw new Error(`Failed to load stats: ${res.status}`);
+                }
+                const data: AnalyticsStats = await res.json();
+                if (isMounted) {
+                    setStats(data);
+                    setError(null);
+                }
+            } catch (err) {
+                if (isMounted) {
+                    setError(err instanceof Error ? err.message : 'Unknown error');
+                }
+            } finally {
+                if (isMounted) {
+                    setLoading(false);
+                }
+            }
+        };
+
+        fetchStats();
+
+        const refreshInterval = setInterval(fetchStats, 60 * 1000);
+        return () => {
+            isMounted = false;
+            clearInterval(refreshInterval);
+        };
+    }, []);
+
+    const statCards = stats
+        ? [
+            {
+                label: 'Total Visitors',
+                value: stats.totalVisitors.toLocaleString(),
+                icon: Users,
+                color: 'var(--neon-cyan)',
+                change: '+12%'
+            },
+            {
+                label: 'Active Now',
+                value: stats.activeUsers,
+                icon: Activity,
+                color: 'var(--neon-green)',
+                change: ''
+            },
+            {
+                label: 'Avg. Session',
+                value: stats.avgSessionDuration,
+                icon: Clock,
+                color: 'var(--neon-amber)',
+                change: '+8%'
+            },
+            {
+                label: 'Bounce Rate',
+                value: stats.bounceRate,
+                icon: TrendingUp,
+                color: 'var(--neon-magenta)',
+                change: '-5%'
+            },
+        ]
+        : [];
 
     return (
         <div className="min-h-screen flex">
@@ -158,6 +189,32 @@ export default function AdminDashboardPage() {
 
                 {/* Stats Grid */}
                 <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+                    {loading && !stats && (
+                        <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            className="sm:col-span-2 lg:col-span-4"
+                        >
+                            <HoloCard className="p-4">
+                                <div className="text-sm text-[var(--text-muted)]">
+                                    Loading analytics...
+                                </div>
+                            </HoloCard>
+                        </motion.div>
+                    )}
+                    {error && (
+                        <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            className="sm:col-span-2 lg:col-span-4"
+                        >
+                            <HoloCard className="p-4" glowColor="var(--neon-magenta)">
+                                <div className="text-sm text-red-400">
+                                    Failed to load analytics: {error}
+                                </div>
+                            </HoloCard>
+                        </motion.div>
+                    )}
                     {statCards.map((stat, index) => (
                         <motion.div
                             key={stat.label}
@@ -199,26 +256,33 @@ export default function AdminDashboardPage() {
                                 Page Views
                             </h3>
                             <div className="space-y-3">
-                                {Object.entries(mockStats.pageViews).map(([page, views]) => {
-                                    const maxViews = Math.max(...Object.values(mockStats.pageViews));
-                                    const percentage = (views / maxViews) * 100;
-                                    return (
-                                        <div key={page}>
-                                            <div className="flex justify-between text-sm mb-1">
-                                                <span className="text-[var(--text-secondary)]">{page}</span>
-                                                <span className="text-[var(--text-primary)]">{views.toLocaleString()}</span>
+                                {stats && Object.entries(stats.pageViews).length > 0 && (
+                                    Object.entries(stats.pageViews).map(([page, views]) => {
+                                        const maxViews = Math.max(...Object.values(stats.pageViews));
+                                        const percentage = (views / maxViews) * 100;
+                                        return (
+                                            <div key={page}>
+                                                <div className="flex justify-between text-sm mb-1">
+                                                    <span className="text-[var(--text-secondary)]">{page}</span>
+                                                    <span className="text-[var(--text-primary)]">{views.toLocaleString()}</span>
+                                                </div>
+                                                <div className="h-2 bg-[var(--void-light)] rounded-full overflow-hidden">
+                                                    <motion.div
+                                                        className="h-full bg-gradient-to-r from-[var(--neon-cyan)] to-[var(--neon-magenta)]"
+                                                        initial={{ width: 0 }}
+                                                        animate={{ width: `${percentage}%` }}
+                                                        transition={{ duration: 0.8, delay: 0.5 }}
+                                                    />
+                                                </div>
                                             </div>
-                                            <div className="h-2 bg-[var(--void-light)] rounded-full overflow-hidden">
-                                                <motion.div
-                                                    className="h-full bg-gradient-to-r from-[var(--neon-cyan)] to-[var(--neon-magenta)]"
-                                                    initial={{ width: 0 }}
-                                                    animate={{ width: `${percentage}%` }}
-                                                    transition={{ duration: 0.8, delay: 0.5 }}
-                                                />
-                                            </div>
-                                        </div>
-                                    );
-                                })}
+                                        );
+                                    })
+                                )}
+                                {stats && Object.entries(stats.pageViews).length === 0 && (
+                                    <div className="text-sm text-[var(--text-muted)]">
+                                        No page view data yet.
+                                    </div>
+                                )}
                             </div>
                         </HoloCard>
                     </motion.div>
@@ -235,29 +299,80 @@ export default function AdminDashboardPage() {
                                 Traffic Sources
                             </h3>
                             <div className="space-y-4">
-                                {mockStats.trafficSources.map((source, index) => (
-                                    <div key={source.source} className="flex items-center gap-3">
-                                        <div
-                                            className="w-3 h-3 rounded-full"
-                                            style={{
-                                                background: index === 0 ? 'var(--neon-cyan)' :
-                                                    index === 1 ? 'var(--neon-magenta)' :
-                                                        index === 2 ? 'var(--neon-amber)' :
-                                                            'var(--text-muted)'
-                                            }}
-                                        />
-                                        <div className="flex-1">
-                                            <div className="text-sm text-[var(--text-primary)]">{source.source}</div>
+                                {stats && stats.trafficSources.length > 0 && (
+                                    stats.trafficSources.map((source, index) => (
+                                        <div key={source.source} className="flex items-center gap-3">
+                                            <div
+                                                className="w-3 h-3 rounded-full"
+                                                style={{
+                                                    background: index === 0 ? 'var(--neon-cyan)' :
+                                                        index === 1 ? 'var(--neon-magenta)' :
+                                                            index === 2 ? 'var(--neon-amber)' :
+                                                                'var(--text-muted)'
+                                                }}
+                                            />
+                                            <div className="flex-1">
+                                                <div className="text-sm text-[var(--text-primary)]">{source.source}</div>
+                                            </div>
+                                            <div className="text-sm font-mono text-[var(--text-secondary)]">
+                                                {source.percentage}%
+                                            </div>
                                         </div>
-                                        <div className="text-sm font-mono text-[var(--text-secondary)]">
-                                            {source.percentage}%
-                                        </div>
+                                    ))
+                                )}
+                                {stats && stats.trafficSources.length === 0 && (
+                                    <div className="text-sm text-[var(--text-muted)]">
+                                        No traffic source data yet.
                                     </div>
-                                ))}
+                                )}
                             </div>
                         </HoloCard>
                     </motion.div>
                 </div>
+
+                {/* Daily Visits */}
+                <motion.div
+                    className="mt-6"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.55 }}
+                >
+                    <HoloCard className="p-6">
+                        <h3 className="text-lg font-[family-name:var(--font-display)] mb-4 flex items-center gap-2">
+                            <BarChart3 size={18} className="text-[var(--neon-amber)]" />
+                            Daily Visits (Last 12 days)
+                        </h3>
+                        {stats && stats.dailyVisits.length > 0 ? (
+                            <div className="flex items-end gap-2 h-40">
+                                {stats.dailyVisits.map((count, index) => {
+                                    const max = Math.max(...stats.dailyVisits);
+                                    const height = max > 0 ? (count / max) * 100 : 0;
+                                    const isToday = index === stats.dailyVisits.length - 1;
+                                    return (
+                                        <div key={index} className="flex flex-col items-center flex-1">
+                                            <motion.div
+                                                className="w-full rounded-t bg-gradient-to-t from-[var(--neon-amber)] to-[var(--neon-cyan)]"
+                                                initial={{ height: 0 }}
+                                                animate={{ height: `${height}%` }}
+                                                transition={{ duration: 0.7, delay: 0.2 + index * 0.03 }}
+                                            />
+                                            <div className="mt-2 text-[10px] text-[var(--text-muted)]">
+                                                {isToday ? 'Today' : `D-${stats.dailyVisits.length - 1 - index}`}
+                                            </div>
+                                            <div className="text-[10px] text-[var(--text-secondary)]">
+                                                {count}
+                                            </div>
+                                        </div>
+                                    );
+                                })}
+                            </div>
+                        ) : (
+                            <div className="text-sm text-[var(--text-muted)]">
+                                No daily visit data yet.
+                            </div>
+                        )}
+                    </HoloCard>
+                </motion.div>
 
                 {/* Recent Visitors */}
                 <motion.div
@@ -282,14 +397,23 @@ export default function AdminDashboardPage() {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {mockStats.recentVisitors.map((visitor, index) => (
-                                        <tr key={index} className="border-b border-[var(--glass-border)]/50">
-                                            <td className="py-3 text-[var(--text-primary)]">{visitor.country}</td>
-                                            <td className="py-3 text-[var(--text-secondary)]">{visitor.city}</td>
-                                            <td className="py-3 text-[var(--neon-cyan)]">{visitor.time}</td>
-                                            <td className="py-3 text-[var(--text-secondary)]">{visitor.pages}</td>
+                                    {stats && stats.recentVisitors.length > 0 && (
+                                        stats.recentVisitors.map((visitor, index) => (
+                                            <tr key={index} className="border-b border-[var(--glass-border)]/50">
+                                                <td className="py-3 text-[var(--text-primary)]">{visitor.country}</td>
+                                                <td className="py-3 text-[var(--text-secondary)]">{visitor.city}</td>
+                                                <td className="py-3 text-[var(--neon-cyan)]">{visitor.time}</td>
+                                                <td className="py-3 text-[var(--text-secondary)]">{visitor.pages}</td>
+                                            </tr>
+                                        ))
+                                    )}
+                                    {stats && stats.recentVisitors.length === 0 && (
+                                        <tr>
+                                            <td colSpan={4} className="py-3 text-[var(--text-muted)] text-center">
+                                                No recent visitors yet.
+                                            </td>
                                         </tr>
-                                    ))}
+                                    )}
                                 </tbody>
                             </table>
                         </div>

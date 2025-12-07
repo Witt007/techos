@@ -31,6 +31,8 @@ export default function Navigation() {
     const { theme, toggleTheme } = useTheme();
     const { locale } = useI18n();
 
+  
+
     useEffect(() => {
         const handleScroll = () => {
             setIsScrolled(window.scrollY > 50);
@@ -45,6 +47,10 @@ export default function Navigation() {
         setIsOpen(false);
     }, [pathname]);
 
+      // Hide navigation on admin pages
+      if (pathname?.startsWith('/admin')) {
+        return null;
+    }
     return (
         <>
             {/* Main Navigation Bar */}

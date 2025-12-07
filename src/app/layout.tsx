@@ -9,6 +9,7 @@ import InteractionController from "@/components/ui/InteractionController";
 import ErrorBoundary from "@/components/ui/ErrorBoundary";
 import PWAInstallPrompt, { ServiceWorkerRegistration } from "@/components/pwa/PWAInstallPrompt";
 import { getPersonJsonLd, getWebsiteJsonLd } from "@/lib/seo";
+import AnalyticsTracker from "@/components/ui/AnalyticsTracker";
 
 const orbitron = Orbitron({
   variable: "--font-display",
@@ -116,6 +117,7 @@ export default function RootLayout({
             <Navigation />
             <main className="relative z-10 min-h-screen">
               {children}
+              <AnalyticsTracker />
             </main>
             <KeyboardShortcuts />
             <InteractionController enableVoice={true} enableGestures={true} />
